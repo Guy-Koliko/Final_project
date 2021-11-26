@@ -1,0 +1,59 @@
+{% extends "vote/base/base.html" %}
+     
+     {% block content %}
+    <div class="container">
+        <h1 class="text-center">Registration</h1>
+        {% csrf_token %}
+        <form method="POST">
+        <div class="col-6 col-md-6 offset-md-3">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Party Agent
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              EC Officials 
+            </label>
+            <br>
+            <div class="form-check ">
+                
+              </div>
+              <div class="form-check ">
+                
+              </div>
+            </div>
+        <div class="mb-3">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control"  placeholder="firstname">
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control"  placeholder="lastname">
+            </div>
+        
+           <div class="form-floating mb-3">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Constituency</option>
+                    <option value="Constituency A">Constituency A</option>
+                    <option value="Constituency B">Constituency B</option>
+                </select>
+          </div>
+          <div class="form-floating mb-3">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Region</option>
+                <option value="Region A">Region A</option>
+                <option value="Region B">Region B</option>
+            </select>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control"  placeholder="024xxxxxx">
+    </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>   
+</div> 
+
+        </div>
+          
+{% endblock %}

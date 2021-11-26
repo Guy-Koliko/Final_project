@@ -1,0 +1,52 @@
+{% extends "vote/base/base.html" %}
+{%block content%}
+     <div class="container">
+        <div class="container">
+            <h4 class='text-center'>CONSTIUENCY VOTE COUNTED</h4>
+            <h6 class='text-center'>Voting Date: 20/11/2021</h6>
+           </div>
+        <div class="container">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Party Name</th>
+                    <th scope="col">Votes (figures)</th>
+                    <th scope="col">Votes (words)</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td><a href="{% url 'poll' %}">CONSTIUENCY A</a></td>
+                    <td>300</td>
+                    <td>THREE HUNDRED</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td><a href="{% url 'poll' %}">CONSTIUENCY B</a></td>
+                    <td>200</td>
+                    <td>TWO HUNDRED</td>
+                                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td><a href="{% url 'poll' %}">CONSTIUENCY C</a></td>
+                    <td>400</td>
+                    <td>FOUR HUNDRED</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4>Total vote cast</h4>
+                    </td>
+                    <td></td>
+                    <td>900</td>
+                    <td>NINE HUNDRED</td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+        </div>
+     </div>
+
+{%endblock%}
