@@ -4,7 +4,7 @@
       <div class="container">
        <div class="container">
         <h4 class='text-center'>Party Data</h4>
-        <h6 class='text-center'>Voting Date: 20/11/2021</h6>
+        <h6 class='text-center'>Voting Date: 10/12/2021</h6>
         <h6 class='text-center'>Political Party Name: Party A information</h6>
        </div>
        
@@ -18,19 +18,23 @@
             <th scope="col">Agent Name</th>
             <th scope="col">Region</th>
             <th scope="col">Constituency</th>
+            <th scope="col">Party Name</th>
             <th scope="col">Polling Station</th>
             <th scope="col">Agent Code</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Kwame Addo</td>
-            <td>REGION A</td>
-            <td>CONSTITUENCY A</td>
-            <td>POLLING A</td>
-            <td>PACC34 A</td>
-            
+          {%for i in user%}
+              <tr>
+                <th scope="row">{{i.num}}</th>
+                <td>{{i.first_name}} {{i.last_name}}</td>
+                <td>{{i.region}}</td>
+                <td>{{i.consituenc}}</td>
+                <td>{{i.party}}</td>
+                <td>{{i.pollingstation}}</td>
+                <td>{{i.id|stringformat:"i"|slice:"-1"|slice:"5"}}</td>
+            {%endfor%}
+                
 
         </tr>
           

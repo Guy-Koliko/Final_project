@@ -2,9 +2,10 @@
 {%block content%}
       <div class="container">
        <div class="container">
+         
         <h4 class='text-center'>Polling Station Name: Polling Station A</h4>
-        <h6 class='text-center'>Voting Date: 20/11/2021</h6>
-        <h6 class='text-center'>Polling Station Officer: Mr. Kwame Goat</h6>
+        <h6 class='text-center'>Voting Date: 10/12/2021</h6>
+        <h6 class='text-center'>Polling Station Officer: Mr. Kwame </h6>
        </div>
        
       
@@ -13,35 +14,27 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">No.</th>
+            
             <th scope="col">Party Name</th>
             <th scope="col">Votes (figures)</th>
             <th scope="col">Votes (words)</th>
           </tr>
         </thead>
         <tbody>
+          {%for i in data %}
+                  {%for o in i.transaction %}
+                   <tr>
+                    <td>{{o.content}}</td>
+                    <td>{{o.vote_in_number}}</td>
+                    <td>{{o.votes_in_words}}</td>
+                </tr>
+                  {%endfor%}
+          {%endfor%}
           <tr>
-            <th scope="row">1</th>
-            <td>PARTY A</td>
-            <td>300</td>
-            <td>THREE HUNDRED</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>PARTY B</td>
-            <td>200</td>
-            <td>TWO HUNDRED</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>PARTY C</td>
-            <td>400</td>
-            <td>FOUR HUNDRED</td>
-          </tr>
-          <tr>
-            <td>
-          </td>
-          </tr>
+            
+          
+         
+         
         </tbody>
       </table>
       

@@ -9,47 +9,52 @@
             <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Party Name</th>
-                    <th scope="col">Votes (figures)</th>
-                    <th scope="col">Votes (words)</th>
-                    <th scope="col">Confirmed by</th>
-                   
+                    <th>No.</th>
+                    <th>Polling Station Name</th>
+                    {%for i in datas%}
+                    <th>{{i.name}}</th>
+                    {%endfor%}
+                    
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td><a href="{% url 'datas' %}">POLLING STATIONS A</a></td>
-                    <td>300</td>
-                    <td>THREE HUNDRED</td>
-                    <td>John Bismark</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td><a href="{% url 'datas' %}">POLLING STATIONS B</a></td>
-                    <td>200</td>
-                    <td>TWO HUNDRED</td>
-                    <td>Ama Paul</td>
-                    </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td><a href="{% url 'datas' %}">POLLING STATIONS C</a></td>
-                    <td>400</td>
-                    <td>FOUR HUNDRED</td>
-                    <td>Kojo Mensah</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h4>Total vote cast</h4>
+                <tbody> 
+                  {%for a in data%}
+                        
+                  <tr id="demo">
+                    <th colspan="1">{{a.id}}</th>
+                    <td> {{a.polling_station_name}}</td>
+                    {%for i in dat%}
+                    {%if i.Poll in a.polling_station_name%}
+                    <td>{{i.Vote_num}}</td>
+                    {%endif%}
+                    {%endfor%}
+                     
+                    <td class="dumb">
+                      {%for w in dat%}
+                        {%for h in w.transaction%}
+                        {% if h.author in a.polling_station_name %}
+                       
+                        <script>
+                          const mydata = "{{w.transaction|safe }}".replace(/'/g, '"');
+                          var obj = JSON.parse(mydata);
+                          
+                          //document.querySelector('.dumb').textContent = obj.map(data => +data.vote_in_number).reduce((sum, current) => sum + current, 0)
+                  
+                        </script>
+                    
+                          {%endif%}
+                        {%endfor%}
+                      {%endfor%}
                     </td>
-                    <td></td>
-                    <td>900</td>
-                    <td>NINE HUNDRED</td>
+                    {%endfor%}
+                    
                   </tr>
-                 
+                  
+               
+                    
                 </tbody>
               </table>
         </div>
      </div>
+
 {%endblock%}

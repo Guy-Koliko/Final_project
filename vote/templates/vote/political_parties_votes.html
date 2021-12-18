@@ -4,8 +4,8 @@
     <div>
           <div class="container">
        <div class="container">
-        <h1 class='text-center'>POLITICAL PARTIES STATS</h1>
-        <h6 class='text-center'>Voting Date: 20/11/2021</h6>
+        <h1 class='text-center'>POLITICAL PARTIES STATISTICS</h1>
+        <h6 class='text-center'>Voting Date: 10/12/2021</h6>
         
        </div>
       
@@ -15,60 +15,38 @@
         <thead>
           <tr>
             <th scope="col">No.</th>
-            <th scope="col">Party Name</th>
-            <th scope="col">REGION A</th>
-            <th scope="col">REGION B</th>
-            <th scope="col">REGION C</th>
+            <th scope="col">Political Parties</th>
+            {%for i in reg%}
+            <th scope="col">{{i}}</th>
+            {%endfor%}
             <th scope="col">TOTAL</th>
             <th scope="col">Percentage (%)</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>PARTY A</td>
-            <td>300</td>
-            <td>300</td>
-            <td>300</td>
-            <td>900</td>
-            <td>9</td>
-            
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>PARTY B</td>
-            <td>200</td>
-            <td>200</td>
-            <td>200</td>
-            <td>600</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>PARTY C</td>
-            <td>400</td>
-            <td>400</td>
-            <td>400</td>
-            <td>1200</td>
-            <td>12</td>
-          </tr>
+          {%for i in data%}
+            <tr>
+              <th scope="row">{{i.id}}</th>
+              <td>{{i}}</td>
+              <td></td>
+              
+              
+            </tr>
+
+          {%endfor%}
+         
+        
           <tr>
               <th colspan="1"></th>
               <td>REJECTED BALLOTS</td>
-              <td>9</td>
-              <td>90</td>
-              <td>100</td>
-              <td>199</td>
-              <td>1.99</td>
+              <td></td>
+              
           </tr>
           <tr >
               <th colspan="1"></th>
               <td><span class="fw-bold">TOTAL</span></td>
-              <td>909</td>
-              <td>990</td>
-              <td>1000</td>
-              <td>2009</td>
-              <td>28.99</td>
+              <td></td>
+             
               
           </tr>
         </tbody>

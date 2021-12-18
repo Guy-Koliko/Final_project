@@ -1,0 +1,38 @@
+{% extends "vote/base/base.html" %}
+{%block content%}
+     <div class="container">
+        <div class="container">
+            <h4 class='text-center'>EC Officials Data</h4>
+            <h6 class='text-center'>Voting Date: 10/12/2021</h6>
+            <h6 class='text-center'>EC Officials:Officials information</h6>
+           </div>
+        <div class="container">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Official Name</th>
+                    <th scope="col">Region</th>
+                    <th scope="col">Constituency</th>
+                    <th scope="col">Polling Station</th>
+                    <th scope="col">Officials Code</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  {%for i in ec%}
+                  <tr>
+                    <th scope="row">{{i.num}}</th>
+                    <td>{{i.first_name}} {{i.last_name}}</td>
+                    <td>{{i.region}}</td>
+                    <td>{{i.consituenc}}</td>
+                    <td>{{i.pollingstation}}</td>
+                    <td>{{i.id|stringformat:"i"|slice:"-1"|slice:"5"}}</td>
+                   </tr>
+                   {%endfor%}
+                </tbody>
+              </table>
+        </div>
+     </div>
+
+{%endblock%}

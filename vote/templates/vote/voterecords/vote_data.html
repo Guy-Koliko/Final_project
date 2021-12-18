@@ -1,96 +1,51 @@
 {% extends "vote/base/base.html" %}
 {%block content%}
-      <div class="container">
-       <div class="container">
-        <h4 class='text-center'>Polling Station Name: Polling Station A</h4>
-        <h6 class='text-center'>Voting Date: 20/11/2021</h6>
-        <h6 class='text-center'>Polling Station Officer: Mr. Kwame John</h6>
-       </div>
-    <div class="container-fluid">
-     
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">No.</th>
-            <th scope="col">Party Name</th>
-            <th scope="col">Votes (figures)</th>
-            <th scope="col">Votes (words)</th>
-            <th scope="col">Party Confirmed code</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>PARTY A</td>
-            <td>300</td>
-            <td>THREE HUNDRED</td>
-            <td>
-              <form class="row g-3">
-              <div class="col-auto">
-                <input type="password" class="form-control" id="inputPassword2" size="4" placeholder="party code">
-              </div>
-              <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Confirmed</button>
-              </div>
-            </form>
-          </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>PARTY B</td>
-            <td>200</td>
-            <td>TWO HUNDRED</td>
-            <td>
-              <form class="row g-3">
-              <div class="col-auto">
-                <input type="password" class="form-control" id="inputPassword2" size="4" placeholder="party code">
-              </div>
-              <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Confirmed</button>
-              </div>
-            </form>
-          </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>PARTY C</td>
-            <td>400</td>
-            <td>FOUR HUNDRED</td>
-            <td>
-              <form class="row g-3">
-              <div class="col-auto">
-                <input type="password" class="form-control" id="inputPassword2" size="4" placeholder="party code">
-              </div>
-              <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Confirmed</button>
-              </div>
-            </form>
-          </td>
-          </tr>
-          <tr>
-            <td>
-              <h4>Total vote cast</h4>
-            </td>
-            <td></td>
-            <td>900</td>
-            <td>NINE HUNDRED</td>
-          </tr>
-          <tr>
-            <td>Polling Station Officer: Mr. Kwame Goat</td>
-            <td>
-              <form class="row g-3">
-              <div class="col-auto">
-                <input type="password" class="form-control" id="inputPassword2" size="4" placeholder="party code">
-              </div>
-              <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-3">Confirmed</button>
-              </div>
-            </form>
-          </td>
-          </tr>
-        </tbody>
-      </table>
-      
-    </div>
-      </div>
+     <div class="container">
+        <div class="container">
+            <h4 class='text-center'>PARTY AGENT CONFIRM VOTE COUNTED</h4>
+            <h6 class='text-center'>Voting Date: 20/11/2021</h6>
+           </div>
+        <div class="container">
+            <table class="table">
+                <thead>
+                  <tr>
+                    
+                    {%for i in data%}
+                    <th>{{i.name}}</th>
+                    {%endfor%}
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody> 
+                
+                        
+                  <tr id="demo">
+                   
+                    {%for b in dat %} 
+                    {%for o in b.transaction %}
+                   
+                    <td>{{o.vote_in_number}}</td>
+                    
+           
+                    {%endfor%}
+                    
+                    {%endfor%}
+                    
+                  </tr>
+                  
+                </tbody>
+              </table>
+              <div class="container">
+                <form class="row g-3" method="POST">
+                  {% csrf_token %}
+                    <div class="col-auto">
+                      <input type="text" name="userconfirm" class="form-control" id="inputPassword2" size="60" placeholder="Enter Sign Key">
+                    </div>
+                    <div class="col-auto">
+                      <button type="submit" class="btn btn-primary mb-3">CONFIRM</button>
+                    </div>
+                  </form>
+               </div>
+        </div>
+     </div>
 {%endblock%}

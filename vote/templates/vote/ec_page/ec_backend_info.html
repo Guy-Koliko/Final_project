@@ -2,8 +2,8 @@
 {%block content%}
      <div class="container">
         <div class="container">
-            <h4 class='text-center'>CONSTIUENCY VOTE COUNTED</h4>
-            <h6 class='text-center'>Voting Date: 20/11/2021</h6>
+            <h4 class='text-center'>CONSTITUENCY VOTE COUNTED</h4>
+            <h6 class='text-center'>Voting Date: 10/12/2021</h6>
            </div>
         <div class="container">
             <table class="table">
@@ -17,17 +17,14 @@
                 <tbody>
                   <tr>
                     <th scope="row">1</th>
-                    <td><a href="{% url 'party_info' %}">EC OFFICIALS </a></td>
+                    <td><a href="{% url 'ec_offciail' %}">EC OFFICIALS </a></td>
                   </tr>
+                  {%for i in party%}
                   <tr>
-                    <th scope="row">2</th>
-                    <td><a href="{% url 'party_info' %}">PARTY A</a></td>
+                    <th scope="row">{{i.id}}</th>
+                    <td><a href="{% url 'party_info' %}">{{i.name}}</a></td>
                    </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td><a href="{% url 'party_info' %}">PARTY B</a></td>
-                  </tr>
-                 
+                   {%endfor%}
                 </tbody>
               </table>
         </div>
