@@ -1,40 +1,74 @@
 {% extends "vote/base/base.html" %}
 {%block content%}
-     <div class="container">
-        <div class="container">
-            <h4 class='text-center'>PARTY AGENT CONFIRM VOTE COUNTED</h4>
-            <h6 class='text-center'>Voting Date: 20/11/2021</h6>
-           </div>
-        <div class="container">
-            <table class="table">
-                <thead>
-                  <tr>
-                    
-                    {%for i in data%}
-                    <th>{{i.name}}</th>
-                    {%endfor%}
-                    <th scope="col">Total</th>
-                  </tr>
-                </thead>
-                <tbody> 
-                
-                        
-                  <tr id="demo">
-                   
-                    {%for b in dat %} 
-                    {%for o in b.transaction %}
-                   
-                    <td>{{o.vote_in_number}}</td>
-                    
-           
-                    {%endfor%}
-                    
-                    {%endfor%}
-                    
-                  </tr>
+<div class="container">
+  <div class="container">
+      <h4 class='text-center'>POLLING STATIONS VOTE COUNTED</h4>
+      <h6 class='text-center'>Voting Date: 20/11/2021</h6>
+     </div>
+  <div class="container">
+      <table class="table">
+          <thead>
+            <tr>
+
+              <th>No.</th>
+              <th>Polling Station Name</th>
+              <th>Rejected ballot</th>
+              {%for i in datas%}
+              <th>{{i.name}}</th>
+              {%endfor%}
+              
+              
+            </tr>
+          </thead>
+          <tbody> 
+            
+
+            {%for a in data%}
                   
-                </tbody>
-              </table>
+            <tr id="demo">
+              <th colspan="1">{{a.id}}</th>
+              <td> {{a.polling_station_name}}</td>
+             
+
+              {%for i in rb%}
+              <td>{{i}}</td>
+              {%endfor%}
+
+              {%for i in dat%}
+              <td>{{i}}</td> 
+              {%endfor%}
+              
+               
+              <td class="dumb">
+                {%for w in dat%}
+                  {%for h in w.transaction%}
+                  {% if h.author in a.polling_station_name %}
+                 
+                  <script>
+                    const mydata = "{{w.transaction|safe }}".replace(/'/g, '"');
+                    var obj = JSON.parse(mydata);
+                    
+                    //document.querySelector('.dumb').textContent = obj.map(data => +data.vote_in_number).reduce((sum, current) => sum + current, 0)
+            
+                  </script>
+              
+                    {%endif%}
+                  {%endfor%}
+                {%endfor%}
+              </td>
+              {%endfor%}
+              
+            </tr>
+            
+         
+              
+          </tbody>
+        </table>
+  </div>
+</div>
+ 
+
+
               <div class="container">
                 <form class="row g-3" method="POST">
                   {% csrf_token %}

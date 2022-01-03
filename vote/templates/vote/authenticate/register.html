@@ -1,19 +1,22 @@
 {% extends "vote/base/base.html" %}
-     
+    <!-- to d , load options of parties , pollstations,regions and constituencies from db -->
      {% block content %}
     <div class="container">
         <h1 class="text-center">Registration</h1>
         {% csrf_token %}
-        <form method="POST">
+        <!-- To do make sure to change url for post method on your own server or machine -->
+        <form method="POST" action="http://127.0.0.1:8000/register/">
+          {% csrf_token%}
+        <form>
         <div class="col-6 col-md-6 offset-md-3">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="flexRadioDefault1">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" value="1" id="flexRadioDefault1">
             <label class="form-check-label" for="flexRadioDefault1">
               Party Agent
             </label>
           </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="flexRadioDefault2" checked>
+          <div class="form-check form-check-inline" >
+            <input class="form-check-input" type="radio" name="inlineRadioOptions"   id="flexRadioDefault2" checked value="2">
             <label class="form-check-label" for="flexRadioDefault2">
               EC Officials 
             </label>
@@ -27,33 +30,75 @@
             </div>
         <div class="mb-3">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control"  placeholder="firstname">
+                <input type="text" class="form-control" name="firstname"  placeholder="firstname">
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control"  placeholder="lastname">
+                <input type="text" class="form-control"  name="lastname"   placeholder="lastname">
             </div>
-        
-           <div class="form-floating mb-3">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Constituency</option>
-                    <option value="Constituency A">Constituency A</option>
-                    <option value="Constituency B">Constituency B</option>
-                </select>
-          </div>
+      
           <div class="form-floating mb-3">
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" name="region">
                 <option selected>Region</option>
-                <option value="Region A">Region A</option>
-                <option value="Region B">Region B</option>
+                {%for i in regions %}
+                <option value="{{i.id}}">{{i.region_name}}</option>
+                {%endfor%}
             </select>
         </div>
+
         <div class="form-floating mb-3">
-            <input type="text" class="form-control"  placeholder="024xxxxxx">
+          <select class="form-select" aria-label="Default select example" name="consti">
+            <option selected>constituency</option>
+            {%for i in constituencies %}
+              <option value="{{i.id}}">{{i.constituency_name}}</option>
+              {%endfor%}
+          </select>
+    </div>
+
+        <div class="form-floating mb-3">
+          <select class="form-select" aria-label="Default select example" name="pollingstation">
+              <option selected>Polling Station</option>
+              {%for i in pollingstations %}
+              <option value="{{i.id}}">{{i.polling_station_name}}</option>
+              {%endfor%}
+          </select>
+      </div>
+
+      <div class="form-floating mb-3" id="partyselector" class = 'hidden'>
+        <select class="form-select" aria-label="Default select example" name="party">
+            <option selected>Party</option>
+            {%for i in parties %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {%endfor%}
+        </select>
+    </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control"  name="phonenumber"   placeholder="024xxxxxx">
     </div>
         <button type="submit" class="btn btn-primary">Register</button>
       </form>   
-</div> 
+
+    </div> 
 
         </div>
-          
+
+        <style>
+          .hidden{
+    display: inline-block;
+}
+        </style>
+
+        <!-- Todo add jquery to enabxle toggle on party agent registration -->
+          <script>
+               $(document).ready(function(){
+  
+        $('#flexRadioDefault1').click(function() {
+          $('#partyselector').toggleClass('hidden;');
+     
+  })
+
+
+
+    })
+          </script>
 {% endblock %}
