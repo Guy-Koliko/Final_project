@@ -1,0 +1,222 @@
+
+{% extends "vote/base/base.html" %}
+     
+{% block content %}
+
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   
+    <!-- custom js libs -->
+
+     <!-- ajax library  -->
+     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+
+     <!-- jquery -->
+     <script src="{% static 'jquery.js' %}"></script>
+
+     <!-- number to words library  -->
+     <script src="{% static 'number2words.js' %}""></script>
+
+
+
+    <title>ECAD-VOTE</title>
+  </head>
+  <body>
+
+
+
+<div class="container mt-4 pt-3 pb-3">
+  <div class="row">
+    
+    <div class="col-lg-3">
+      <div class="text-center">
+        
+      <div class="list-group mt-5">
+
+        {% for profile in profiles %}
+          <a
+          class="list-group-item list-group-item-action">Profile
+          Information</a>
+          <a
+          class="list-group-item list-group-item-action">Id Number : <strong>{{profile.user_code}} </strong></a>
+
+          <a
+          class="list-group-item list-group-item-action"> First Name : <strong>{{profile.first_name}}</strong> </a>
+
+          <a
+          class="list-group-item list-group-item-action">
+          Last Name : <strong>{{profile.last_name}} </strong></a>
+
+          <a
+          class="list-group-item list-group-item-action">
+         Phone Number: <strong>{{profile.phone_number}}</strong></a>
+
+         {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <!-- <div class="text-center"> -->
+      <div class="list-group mt-5">
+
+
+    <div class="container col-6 col-md-6 offset-md-3">
+      <h1>ECAD-VOTE</h1>
+      <form method="POST" action="http://127.0.0.1:5000/submit" >
+        {% csrf_token %}
+
+        <div class="form-group">
+          <div class="form-group">
+            <h1  style="font-size: small; padding-top: 0.3cm;">Region</h1>
+            {% for profile in profiles %}
+            <input type="text" name="region" id="region" class="form-control" value = "{{profile.region}}" readonly>
+            {% endfor %}
+          </div>
+          <div class="form-group" style="padding-top: 0.3cm;">
+            <h1 style="font-size: small; padding-top: 0.3cm;">Constituency</h1>
+            {% for profile in profiles %}
+            <input type="text" name="constituency" id="constituency" class="form-control" value = "{{profile.consituenc}}" readonly>
+            {% endfor %}
+          </div>  
+          
+         <div class="form-group" style="padding-top: 0.3cm;">
+          <h1 style="font-size: small; padding-top: 0.3cm;">Polling station</h1>
+          {% for profile in profiles %}
+          <input type="text" name="author" id="author" class="form-control" value = "{{profile.pollingstation}}" readonly>
+          {% endfor %}
+        </div">  
+
+        
+        <div class="form-group" style="padding-top: 0.3cm;">
+          <h1 style="font-size: small; padding-top: 0.5cm;">Enter the votes for the parties</h1>
+          </div>
+          
+
+          {% for party in parties %}
+        <div class="form-group" style="padding-top: 0.3cm;">
+          <input type="text" name="{{party}}" id="{{party}}" class="form-control" value = "{{party}}" readonly>
+          <input type="text" name="{{party}}vote_in_number" class="vote_in_number" class="form-control"  placeholder="Vote in figure"" >
+        </div>
+        <h1 class="words" style="font-size: small; padding-top: 0.3cm;">Vote in Words</h1>
+        {% endfor %}
+        
+
+       
+     
+        <div class="form-group" style="padding-top: 0.3cm;">
+
+          <input type="text" name="rejected_ballot" id="rejected_ballot_in_number" class="form-control" placeholder=" Total Rejected Ballot">
+        </div>
+
+        <h1 id="rejected_ballot_in_words" style="font-size: small; padding-top: 0.3cm;">rejected ballots in Words</h1>
+
+       <div style="padding-top: 0.3cm;">
+        <button type="submit" class="btn btn-primary" id="saveButton">Submit</button>
+       </div>
+        
+      
+      </form>
+      
+    </div>
+     
+
+
+
+
+    </div>
+  <!-- </div> -->
+
+</div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+     
+    <!-- JQUERY TO update number to words  -->
+
+    <script> 
+    
+    $(document).ready(function(){
+      // To-do :onload empty the input fields
+      
+      // func to update the figures in words for votes casted 
+      // function worder() {
+      //   var number = $(this).val();  
+      //     var Inwords = toWordsconver(number);
+      //     if ($(this).val().length == 0  ) {
+      //       $('#words').html("Vote in words");
+      //     }
+      //     else {
+      //       $("#words").html(Inwords + "votes casted");
+        
+      // }
+    
+          // }  
+        
+
+  $('.vote_in_number').keyup(function() {
+          var number = $(this).val();  
+          var Inwords = toWordsconver(number);
+          if ($(this).val().length == 0  ) {
+            $('.words').html("Vote in words");
+          }
+          else {
+            $('.words').html(Inwords + "votes casted");
+          }  
+  })
+
+  $('#NPP ').keyup(function() {
+          console.log('keyup')
+          var number = $(this).val();  
+          var Inwords = toWordsconver(number);
+          if ($(this).val().length == 0  ) {
+            $('.NPP ').html("Vote in words");
+          }
+          else {
+            $('.NPP ').html(Inwords + "votes casted");
+          }  
+  })
+
+  $('#NDC ').keyup(function() {
+          console.log('keyup')
+          var number = $(this).val();  
+          var Inwords = toWordsconver(number);
+          if ($(this).val().length == 0  ) {
+            $('.NDC ').html("Vote in words");
+          }
+          else {
+            $('.NDC ').html(Inwords + "votes casted");
+          }  
+  })
+
+
+          // func to update the figures in words for ballots rejected 
+          $('#rejected_ballot_in_number').keyup(function() {
+          var number = $(this).val();  
+          var Inwords = toWordsconver(number);
+          if ($(this).val().length == 0  ) {
+            $('#rejected_ballot_in_words').html("rejected ballots in words");
+          }
+          else {
+            $('#rejected_ballot_in_words').html(Inwords + "ballots rejected");
+          }  
+  })
+
+  
+    })
+   </script>
+  
+  </body>
+</html>
+{% endblock %}

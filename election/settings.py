@@ -13,7 +13,13 @@ SECRET_KEY = 'django-insecure-odg7w3=^usae-4i0)nqnjp)3l(=0+swrg7(tek(lz#*#3gt9dx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+CORS_ALLOWED_ORIGINS = [
+
+"http://localhost:8000",
+"http://127.0.0.1:5000"
+]
 
 
 # Application definition
@@ -29,6 +35,7 @@ INSTALLED_APPS = [
     'voterecode',
     'authenticate',
     'ecbackend',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -39,6 +46,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'election.urls'
@@ -116,3 +125,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+APPEND_SLASH=False

@@ -9,25 +9,35 @@
             <table class="table">
                 <thead>
                   <tr>
+
                     <th>No.</th>
                     <th>Polling Station Name</th>
+                    <th>Rejected ballot</th>
                     {%for i in datas%}
                     <th>{{i.name}}</th>
                     {%endfor%}
                     
+                    
                   </tr>
                 </thead>
                 <tbody> 
+                  
+
                   {%for a in data%}
                         
                   <tr id="demo">
                     <th colspan="1">{{a.id}}</th>
                     <td> {{a.polling_station_name}}</td>
-                    {%for i in dat%}
-                    {%if i.Poll in a.polling_station_name%}
-                    <td>{{i.Vote_num}}</td>
-                    {%endif%}
+                   
+
+                    {%for i in rb%}
+                    <td>{{i}}</td>
                     {%endfor%}
+
+                    {%for i in dat%}
+                    <td>{{i}}</td> 
+                    {%endfor%}
+                    
                      
                     <td class="dumb">
                       {%for w in dat%}

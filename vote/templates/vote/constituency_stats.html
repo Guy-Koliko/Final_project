@@ -4,7 +4,7 @@
     <div>
           <div class="container">
        <div class="container">
-        <h1 class='text-center'>REGIONAL POLITICAL PARTIES STATISTICS</h1>
+        <h1 class='text-center'>CONSTITUENCY POLITICAL PARTIES STATISTICS</h1>
         <h6 class='text-center'>Voting Date: 10/12/2021</h6>
         
        </div>
@@ -15,7 +15,7 @@
         <thead>
           <tr>
             <th scope="col">No.</th>
-            <th scope="col">Regions</th>
+            <th scope="col">Constituency</th>
             {%for i in data%}
             <th scope="col">{{i}}</th>
             {%endfor%}
@@ -48,7 +48,7 @@
           </tr> -->
           <tr >
               <th colspan="1"></th>
-              <td><span class="fw-bold">TOTAL (Regional Party Sum):</span></td>
+              <td><span class="fw-bold">TOTAL (Constituency Party Sum):</span></td>
 
               {%for i in sums%}
               <td>{{i.nppsum}}</td>
