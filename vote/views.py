@@ -248,14 +248,17 @@ def political_party_stats(request):
             votedtotal += final_results_value[index][3]
 
             votesum = {'ndcsum': party1sum ,'nppsum': party2sum,'totalrejected': totalrejected,'votedtotal': votedtotal,}
-    vsum.append(votesum) 
+    try:
+        vsum.append(votesum) 
+    except:
+        pass 
 
 
 #   individual regional results 
     for i in final_results:
         index = final_results.index(i)
 
-        total = {'index': index,'region':i,'ndc': final_results_value[index][0],'npp': final_results_value[index][1],'rejected': final_results_value[index][2],'total': final_results_value[index][3],'percentage': (final_results_value[index][3]/votesum['votedtotal'])*100,}
+        total = {'index': index,'region':i,'ndc': final_results_value[index][0],'npp': final_results_value[index][1],'rejected': final_results_value[index][2],'total': final_results_value[index][3],'percentage': round((final_results_value[index][3]/votesum['votedtotal'])*100,2),}
         payload.append(total) 
     # print(payload)
 
@@ -263,16 +266,24 @@ def political_party_stats(request):
 
 #final voting result expressed in percentages
     # for i in final_results:
-    npp_percentage = (votesum['nppsum']/ votesum['votedtotal']) * 100
-    ndc_percentage = (votesum['ndcsum']/ votesum['votedtotal']) * 100
-    rejected_percentage = (votesum['totalrejected']/ votesum['votedtotal']) * 100
+    try:
 
-    final_percentage = {"npp_percentage": npp_percentage,"ndc_percentage":ndc_percentage,"rejected_percentage":rejected_percentage,}
-    vote_percentage_results = []
-    vote_percentage_results.append(final_percentage)
+        npp_percentage = round((votesum['nppsum']/ votesum['votedtotal']) * 100,2)
+        ndc_percentage = round((votesum['ndcsum']/ votesum['votedtotal']) * 100,2)
+        rejected_percentage = round((votesum['totalrejected']/ votesum['votedtotal']) * 100,2)
+
+        final_percentage = {"npp_percentage": npp_percentage,"ndc_percentage":ndc_percentage,"rejected_percentage":rejected_percentage,}
+        vote_percentage_results = []
+        vote_percentage_results.append(final_percentage)
+    except:
+        pass
     
     print(pp)
-    context = {'data':pp,'reg':region,"final": payload , "sums" : vsum ,"percentage_res":vote_percentage_results,}
+    try:
+
+        context = {'data':pp,'reg':region,"final": payload , "sums" : vsum ,"percentage_res":vote_percentage_results,}
+    except:
+        context = {}
     return render(request,"vote/political_parties_votes.html",context)
 #################################
 
@@ -387,14 +398,17 @@ def polling_station_stats(request):
             votedtotal += final_results_value[index][3]
 
             votesum = {'ndcsum': party1sum ,'nppsum': party2sum,'totalrejected': totalrejected,'votedtotal': votedtotal,}
-    vsum.append(votesum) 
+    try:
+        vsum.append(votesum) 
+    except:
+        pass
 
 
 #   individual regional results 
     for i in final_results:
         index = final_results.index(i)
 
-        total = {'index': index,'region':i,'ndc': final_results_value[index][0],'npp': final_results_value[index][1],'rejected': final_results_value[index][2],'total': final_results_value[index][3],'percentage': (final_results_value[index][3]/votesum['votedtotal'])*100,}
+        total = {'index': index,'region':i,'ndc': final_results_value[index][0],'npp': final_results_value[index][1],'rejected': final_results_value[index][2],'total': final_results_value[index][3],'percentage': round((final_results_value[index][3]/votesum['votedtotal'])*100,2),}
         payload.append(total) 
     # print(payload)
 
@@ -402,16 +416,24 @@ def polling_station_stats(request):
 
 #final voting result expressed in percentages
     # for i in final_results:
-    npp_percentage = (votesum['nppsum']/ votesum['votedtotal']) * 100
-    ndc_percentage = (votesum['ndcsum']/ votesum['votedtotal']) * 100
-    rejected_percentage = (votesum['totalrejected']/ votesum['votedtotal']) * 100
+    try:
 
-    final_percentage = {"npp_percentage": npp_percentage,"ndc_percentage":ndc_percentage,"rejected_percentage":rejected_percentage,}
-    vote_percentage_results = []
-    vote_percentage_results.append(final_percentage)
+        npp_percentage = round((votesum['nppsum']/ votesum['votedtotal']) * 100,2)
+        ndc_percentage = round((votesum['ndcsum']/ votesum['votedtotal']) * 100,2)
+        rejected_percentage = round((votesum['totalrejected']/ votesum['votedtotal']) * 100,2)
+
+        final_percentage = {"npp_percentage": npp_percentage,"ndc_percentage":ndc_percentage,"rejected_percentage":rejected_percentage,}
+        vote_percentage_results = []
+        vote_percentage_results.append(final_percentage)
+
+    except:
+        pass
     
     print(pp)
-    context = {'data':pp,'reg':region,"final": payload , "sums" : vsum ,"percentage_res":vote_percentage_results,}
+    try:
+        context = {'data':pp,'reg':region,"final": payload , "sums" : vsum ,"percentage_res":vote_percentage_results,}
+    except:
+        context = {}
     return render(request,"vote/polling_station_stats.html",context)
 #################################
 
@@ -527,14 +549,17 @@ def constituency_stats(request):
             votedtotal += final_results_value[index][3]
 
             votesum = {'ndcsum': party1sum ,'nppsum': party2sum,'totalrejected': totalrejected,'votedtotal': votedtotal,}
-    vsum.append(votesum) 
+    try:
+        vsum.append(votesum) 
+    except:
+        pass
 
 
 #   individual regional results 
     for i in final_results:
         index = final_results.index(i)
 
-        total = {'index': index,'region':i,'ndc': final_results_value[index][0],'npp': final_results_value[index][1],'rejected': final_results_value[index][2],'total': final_results_value[index][3],'percentage': (final_results_value[index][3]/votesum['votedtotal'])*100,}
+        total = {'index': index,'region':i,'ndc': final_results_value[index][0],'npp': final_results_value[index][1],'rejected': final_results_value[index][2],'total': final_results_value[index][3],'percentage': round((final_results_value[index][3]/votesum['votedtotal'])*100,2),}
         payload.append(total) 
     # print(payload)
 
@@ -542,16 +567,23 @@ def constituency_stats(request):
 
 #final voting result expressed in percentages
     # for i in final_results:
-    npp_percentage = (votesum['nppsum']/ votesum['votedtotal']) * 100
-    ndc_percentage = (votesum['ndcsum']/ votesum['votedtotal']) * 100
-    rejected_percentage = (votesum['totalrejected']/ votesum['votedtotal']) * 100
+    try:
+        npp_percentage = round((votesum['nppsum']/ votesum['votedtotal']) * 100,2)
+        ndc_percentage = round((votesum['ndcsum']/ votesum['votedtotal']) * 100,2)
+        rejected_percentage = round((votesum['totalrejected']/ votesum['votedtotal']) * 100,2)
 
-    final_percentage = {"npp_percentage": npp_percentage,"ndc_percentage":ndc_percentage,"rejected_percentage":rejected_percentage,}
-    vote_percentage_results = []
-    vote_percentage_results.append(final_percentage)
+        final_percentage = {"npp_percentage": npp_percentage,"ndc_percentage":ndc_percentage,"rejected_percentage":rejected_percentage,}
+        vote_percentage_results = []
+        vote_percentage_results.append(final_percentage)
+    except:
+        pass
     
     print(pp)
-    context = {'data':pp,'reg':region,"final": payload , "sums" : vsum ,"percentage_res":vote_percentage_results,}
+    try:
+        context = {'data':pp,'reg':region,"final": payload , "sums" : vsum ,"percentage_res":vote_percentage_results,}
+    except:
+        context = {}
+
     return render(request,"vote/constituency_stats.html",context)
 #################################
 
