@@ -63,12 +63,22 @@ def vote_recorde(request):
      # data from our database
      data = PollingStation.objects.filter(polling_station_name = ps)#we are retieving data for only one ps
      datas = PoliticalParty.objects.all()
+
+     # get number of parties
+     parties_no = len(datas)
+     # print(parties_no)
      
+     results = []
      for i in j:
           if i:
-               print('check')
+               # print('check')
                try:
-                    results = [ i[0][region1][constituency1][polling_station1][party1],i[0][region1][constituency1][polling_station1][party2]]
+                    for k in datas:
+                         results.append(i[0][region1][constituency1][polling_station1][f'{k}'])
+                    # results = [ i[0][region1][constituency1][polling_station1][party1],i[0][region1][constituency1][polling_station1][party2]]
+                         # print(results)
+                    results = results[-parties_no:]
+                    
                     rejected_ballot = i[0][region1][constituency1][polling_station1]['rejected_ballot']
                     rb = [rejected_ballot]  
                except:

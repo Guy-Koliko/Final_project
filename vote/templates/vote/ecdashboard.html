@@ -73,7 +73,11 @@
 
     <div class="container col-6 col-md-6 offset-md-3">
       <h1>ECAD-VOTE</h1>
-      <form method="POST" action="http://127.0.0.1:5000/submit" >
+
+
+
+
+      <form id="postform">
         {% csrf_token %}
 
         <div class="form-group">
@@ -106,9 +110,9 @@
           {% for party in parties %}
         <div class="form-group" style="padding-top: 0.3cm;">
           <input type="text" name="{{party}}" id="{{party}}" class="form-control" value = "{{party}}" readonly>
-          <input type="text" name="{{party}}vote_in_number" class="vote_in_number" class="form-control"  placeholder="Vote in figure"" >
+          <input type="text" name="{{party}}vote_in_number" id = "{{party}}vote_in_number"  class="vote_in_number" class="form-control"  placeholder="Vote in figure"" >
         </div>
-        <h1 class="words" style="font-size: small; padding-top: 0.3cm;">Vote in Words</h1>
+        <h1 class="words" style="font-size: small; padding-top: 0.3cm;" id = '{{party}}words'>Vote in Words</h1>
         {% endfor %}
         
 
@@ -130,10 +134,6 @@
       
     </div>
      
-
-
-
-
     </div>
   <!-- </div> -->
 
@@ -166,6 +166,7 @@
         
 
   $('.vote_in_number').keyup(function() {
+
           var number = $(this).val();  
           var Inwords = toWordsconver(number);
           if ($(this).val().length == 0  ) {
@@ -176,29 +177,24 @@
           }  
   })
 
-  $('#NPP ').keyup(function() {
-          console.log('keyup')
-          var number = $(this).val();  
-          var Inwords = toWordsconver(number);
-          if ($(this).val().length == 0  ) {
-            $('.NPP ').html("Vote in words");
-          }
-          else {
-            $('.NPP ').html(Inwords + "votes casted");
-          }  
-  })
+  
+  // $(function() {
+  //   {% for party in parties %}
 
-  $('#NDC ').keyup(function() {
-          console.log('keyup')
-          var number = $(this).val();  
-          var Inwords = toWordsconver(number);
-          if ($(this).val().length == 0  ) {
-            $('.NDC ').html("Vote in words");
-          }
-          else {
-            $('.NDC ').html(Inwords + "votes casted");
-          }  
-  })
+  //   $('#{{party}}').keyup(function() {
+
+  //   var number = $(this).val();  
+  //   var Inwords = toWordsconver(number);
+  //   if ($(this).val().length == 0  ) {
+  //     $('#{{party}}words').html("Vote in words");
+  //   }
+  //   else {
+  //     $('#{{party}}words').html(Inwords + "votes casted");
+  //   }  
+  //   })
+
+  //   {% endfor %}    
+  // })
 
 
           // func to update the figures in words for ballots rejected 
@@ -213,9 +209,120 @@
           }  
   })
 
+    const postform = document.getElementById('postform')
+    postform.addEventListener('submit',e =>{
+      e.preventDefault();
+  
+      // get results 
+      var payload ;
+
+      $(function() {
+         // get the loc values 
+        
+        const newtx_url = "http://127.0.0.1:5000/new_transaction"; 
+        var partylist = {};
+        
+        var regiondict = {};
+        var  authordict = {};
+        var condict = {};
+
+        {% for party in parties %}
+        var t = document.getElementById('{{party}}vote_in_number').value
+        partylist['{{party}}'] = t;
+        {% endfor %}
+
+        partylist['rejected_ballot'] = $("#rejected_ballot_in_number").val(); 
+        
+
+        // append to final payload 
+
+         // payload 
+        var region = $("#region").val(); 
+        var constituency = $("#constituency").val(); 
+        var author = $("#author").val(); 
+
+        r = JSON.stringify(region)
+        c = JSON.stringify(constituency)
+        a = JSON.stringify(author)
+        h = JSON.stringify(partylist)
+        var payload = `{${r}:{${c}:{${a}:${h}}}}`
+
+        // varpinfo =${JSON.stringify(partylist)}
+        // var payload = `{${region}:{${constituency}:{${author}}}}`
+        // payload = JSON.stringify(payload)
+        
+
+        alert(payload)
+
+
+        $.ajax({
+          type:"POST",
+          contentType:'application/json',
+          url :newtx_url,
+          data:payload,
+//           data : JSON.stringify({
+//   "WesternNorth": {
+//     "westernnorth1": {
+//       "westernnorth1ps2 ": {
+//         "NDC ": "8289",
+//         "NPP ": "7878",
+//         "rejected_ballot": "8908"
+//       }
+//     }
+//   }
+// }),
+          success:function () {
+            alert('mined')
+            
+          },
+        error:function(){
+          alert(payload)
+        }
+        })
+      
+
+      })
+
+
+      // {%for party in parties %}
+      // partylist.push({{party}}:$("#{{party}}vote_in_number").val())
+      // {% endfor %}
+      // console.log(document)
+   
+
+      
+
+    })
   
     })
    </script>
+
+
+<!-- <script type= "text/javascript">
+  // post data to blockchain and redirect 
+  $('#savebutton1').click(function() {
+          // new transation url goes here 
+          // newtx_url = "http://127.0.0.1:5000/new_transaction";
+
+          // redirect url goes here / there may be no need for redirect just a table update or alert 
+
+          var pa = {};rtylist
+          // var region = $("#region").val();  
+          // var constituency = $("#constituency").val(); 
+          // var author = $("#author").val(); 
+
+          {%for party in parties %}
+
+          partylist.push({{party}}:$("#{{party}}vote_in_number").val())
+
+          {% endfor %}
+
+          var rejected_ballot = $("#rejected_ballot_in_number").val();  
+          
+          alert(partylist)
+  } )
+
+</script> -->
   
   </body>
 </html>
