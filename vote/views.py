@@ -56,6 +56,8 @@ def polling_station(request):
     polling_station1= request.GET.get('ps',"")
     party1 = request.GET.get('party1',"")
     party2 = request.GET.get('party2',"")
+    results = []
+    rb = []
     
 
     # mine what ever results have being  submitted b the ec 
@@ -97,24 +99,34 @@ def polling_station(request):
     j = jmespath.search('chain[*].transaction',var)
    
     # set polling station data to string and remove all spaces before  search
-    ps = str(polling_station1.split()[0])
+    try:
+        ps = str(polling_station1.split()[0])
+    except:
+        ps = []
 
-    # data from our database
-    data = PollingStation.objects.filter(polling_station_name = ps)#we are retieving data for only one ps
-    datas = PoliticalParty.objects.all()
-    # for i in data:
-    #     print(i.polling_station_name)
+    try:
+        # data from our database
+        data = PollingStation.objects.filter(polling_station_name = ps)#we are retieving data for only one ps
+        datas = PoliticalParty.objects.all()
+        # for i in data:
+        #     print(i.polling_station_name)
+    except:
+        data = []
+        datas = []
 
     # get the results 
-    for i in j:
-        if i:
-            try:
-                results = [ i[0][region1][constituency1][polling_station1][party1],i[0][region1][constituency1][polling_station1][party2]]
-                rejected_ballot = i[0][region1][constituency1][polling_station1]['rejected_ballot']
-                rb = [rejected_ballot]
-            except:
-                pass
-
+    try:
+        for i in j:
+            if i:
+                try:
+                    results = [ i[0][region1][constituency1][polling_station1][party1],i[0][region1][constituency1][polling_station1][party2]]
+                    rejected_ballot = i[0][region1][constituency1][polling_station1]['rejected_ballot']
+                    rb = [rejected_ballot]
+                except:
+                    rb = []
+                    # pass
+    except:
+        pass
     context = {'data':data,'datas':datas,'dat':results,'rb': rb }
     return render(request,"vote/vote_by_polling_station.html",context)
 
