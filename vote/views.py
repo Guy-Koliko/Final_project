@@ -18,7 +18,7 @@ CONNECTED_NODE_ADDRESS = "http://127.0.0.1:{}".format(port)
 
 
 # Create your views here.
-@login_required()
+@login_required(login_url='/login/')
 def index(request):
     res = requests.get('https://script.google.com/macros/s/AKfycbxOLElujQcy1-ZUer1KgEvK16gkTLUqYftApjNCM_IRTL3HSuDk/exec?id=1RNbt5aoaP97EKLlrFSO4_TIbNOtPT4CBQhrbNhopz-M&sheet=Sheet3')
     var = json.loads(res.text)
@@ -32,7 +32,7 @@ def index(request):
     context = {'data':consts,'c_vote':c_vote,'dat':j}
     return render(request,"vote/index.html",context)
 
-@login_required()
+@login_required(login_url='/login/')
 def constituency(request):
      #this is the url to api
     # res = requests.get('https://script.google.com/macros/s/AKfycbxOLElujQcy1-ZUer1KgEvK16gkTLUqYftApjNCM_IRTL3HSuDk/exec?id=1RNbt5aoaP97EKLlrFSO4_TIbNOtPT4CBQhrbNhopz-M&sheet=Sheet4')
@@ -47,7 +47,7 @@ def constituency(request):
     return render(request,"vote/vote_by_constituency.html",context)
 
 # ##############################################################################################
-@login_required()
+@login_required(login_url='/login/')
 def polling_station(request):
     
     # Get the polling station name from the requests and continue
@@ -56,6 +56,8 @@ def polling_station(request):
     polling_station1= request.GET.get('ps',"")
     party1 = request.GET.get('party1',"")
     party2 = request.GET.get('party2',"")
+    results = []
+    rb = []
     
 
     # mine what ever results have being  submitted b the ec 
@@ -97,24 +99,34 @@ def polling_station(request):
     j = jmespath.search('chain[*].transaction',var)
    
     # set polling station data to string and remove all spaces before  search
-    ps = str(polling_station1.split()[0])
+    try:
+        ps = str(polling_station1.split()[0])
+    except:
+        ps = []
 
-    # data from our database
-    data = PollingStation.objects.filter(polling_station_name = ps)#we are retieving data for only one ps
-    datas = PoliticalParty.objects.all()
-    # for i in data:
-    #     print(i.polling_station_name)
+    try:
+        # data from our database
+        data = PollingStation.objects.filter(polling_station_name = ps)#we are retieving data for only one ps
+        datas = PoliticalParty.objects.all()
+        # for i in data:
+        #     print(i.polling_station_name)
+    except:
+        data = []
+        datas = []
 
     # get the results 
-    for i in j:
-        if i:
-            try:
-                results = [ i[0][region1][constituency1][polling_station1][party1],i[0][region1][constituency1][polling_station1][party2]]
-                rejected_ballot = i[0][region1][constituency1][polling_station1]['rejected_ballot']
-                rb = [rejected_ballot]
-            except:
-                pass
-
+    try:
+        for i in j:
+            if i:
+                try:
+                    results = [ i[0][region1][constituency1][polling_station1][party1],i[0][region1][constituency1][polling_station1][party2]]
+                    rejected_ballot = i[0][region1][constituency1][polling_station1]['rejected_ballot']
+                    rb = [rejected_ballot]
+                except:
+                    rb = []
+                    # pass
+    except:
+        pass
     context = {'data':data,'datas':datas,'dat':results,'rb': rb }
     return render(request,"vote/vote_by_polling_station.html",context)
 
@@ -124,7 +136,7 @@ def add_list(m):
 
 
 
-@login_required()
+@login_required(login_url='/login/')
 def vote_data_input(request):
     # res = requests.get('http://127.0.0.1:9000/chain')
     # var = json.loads(res.text)
@@ -139,7 +151,7 @@ def vote_data_input(request):
 
 
 ################################
-@login_required()
+@login_required(login_url='/login/')
 def political_party_stats(request):
     g = globals()
     General_results = []
@@ -289,7 +301,7 @@ def political_party_stats(request):
 
 
 
-@login_required()
+@login_required(login_url='/login/')
 def polling_station_stats(request):
     g = globals()
     General_results = []
@@ -440,7 +452,7 @@ def polling_station_stats(request):
 
 
 
-@login_required()
+@login_required(login_url='/login/')
 def constituency_stats(request):
     g = globals()
     General_results = []
@@ -592,7 +604,7 @@ def constituency_stats(request):
 
 
 # dashbpard for ecofficial 
-@login_required
+@login_required(login_url='/login/')
 def ecdashboard(request):
     print(res.url)
     data = EcOfficial.objects.filter(user_code= username)
